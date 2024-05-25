@@ -17,6 +17,22 @@ class UserService {
     const { password, ...createdUser } = result.rows[0];
     return createdUser;
   };
+
+  getUserByEmail = async (email) => {
+    const query = 'SELECT * FROM site_user WHERE email_address = $1 LIMIT 1';
+
+    const result = await this.db.query(query, [email]);
+    const user = result.rows[0];
+    return user;
+  };
+
+  getUser = async (id) => {
+    const query = 'SELECT * FROM site_user WHERE id = $1 LIMIT 1';
+
+    const result = await this.db.query(query, [id]);
+    const { password, ...user } = result.rows[0];
+    return user;
+  };
 }
 
 export default UserService;
