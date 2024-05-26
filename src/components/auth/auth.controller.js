@@ -19,6 +19,8 @@ class AuthController {
       return res.status(500).json({ error: err.message });
     }
   };
+
+  // TODO: implement logout handler
 }
 
 export default AuthController;

@@ -56,7 +56,7 @@ class UserService {
           oldUser.id
         ]
       );
-      const user = result.rows[0];
+      const { password, ...user } = result.rows[0];
       return user;
     } else {
       const result = await this.db.query(

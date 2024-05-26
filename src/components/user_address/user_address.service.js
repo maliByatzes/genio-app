@@ -25,12 +25,16 @@ class UserAddressService {
     return user_address;
   };
 
-  updateUserAddress = async (user_address, isDefault) => {
+  updateUserAddress = async (user_address, isDefault = undefined) => {
     const query = 'UPDATE user_address SET is_default = $1 WHERE user_id = $2 AND address_id = $3 RETURNING *';
 
     const result = await this.db.query(
       query,
-      [isDefault, user_address.user_id, user_address.address_id]
+      [
+        isDefault !== undefined ? isDefault : user_address.is_default,
+        user_address.user_id,
+        user_address.address_id
+      ]
     );
     const user_address = result.rows[0];
     return user_address;

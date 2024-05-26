@@ -28,6 +28,7 @@ class UserController {
   };
 
   updateUser = async (req, res) => {
+    // TODO: logout the user if the password is updated
     try {
       const current_user = res.locals.user;
 
