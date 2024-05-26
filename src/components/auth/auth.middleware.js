@@ -2,7 +2,7 @@
 class AuthMiddleware {
   constructor(authService, userService) {
     this.authService = authService;
-    this.authService = userService;
+    this.userService = userService;
   }
 
   authorize = async (req, res, next) => {
@@ -22,9 +22,21 @@ class AuthMiddleware {
         return res.status(401).send({ error: 'Unauthorized' });
       }
 
-      console.log('payload: ', payload);
-      // const user = await this.authService.getUser(p)
+      const user = await this.userService.getUser(payload.user.id);
+      res.locals.user = user;
+      next();
+    } catch (err) {
+      return res.status(500).json({ error: err.message });
+    }
+  };
 
+  requireUser = async (req, res, next) => {
+    try {
+      const user = res.locals.user;
+
+      if (!user) {
+        return res.status(401).send({ error: 'Session has expired or user doesn\'t exist' });
+      }
       next();
     } catch (err) {
       return res.status(500).json({ error: err.message });

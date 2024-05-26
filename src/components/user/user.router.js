@@ -11,6 +11,7 @@ class UserRouter {
     router.route('/register').post(this.userController.createUser);
     router
       .use(this.authMiddleware.authorize)
+      .use(this.authMiddleware.requireUser)
       .route('/me')
       .get(this.userController.getUser);
     return router;

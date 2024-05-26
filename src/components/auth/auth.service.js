@@ -4,7 +4,7 @@ import * as argon2 from 'argon2';
 
 const SECRET = new TextEncoder().encode(process.env.TOKEN_SECRET);
 const ALGORITHM = 'HS256';
-const EXPIRATION_TIME = '2h';
+const EXPIRATION_TIME = '1h';
 
 class AuthService {
   constructor() {}
@@ -29,7 +29,6 @@ class AuthService {
   verifyToken = async (token) => {
     try {
       const { payload } = await jose.jwtVerify(token, SECRET);
-      console.log('Payload: ', payload.user);
       return { isValid: true, payload };
     } catch (err) {
       return { isValid: false, payload: null };

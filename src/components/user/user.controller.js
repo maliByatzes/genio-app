@@ -18,7 +18,9 @@ class UserController {
 
   getUser = async (req, res) => {
     try {
-      const user = await this.userService.getUser(5);
+      const res_user = res.locals.user;
+
+      const user = await this.userService.getUser(res_user.id);
       return res.status(200).send(user);
     } catch (err) {
       return res.status(500).json({ error: err.message });
