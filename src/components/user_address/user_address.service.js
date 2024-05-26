@@ -5,12 +5,12 @@ class UserAddressService {
     this.db = db;
   }
 
-  addUserAddress = async (user, address, isDefault = false) => {
+  addUserAddress = async (user, address, isDefault = undefined) => {
     const query = 'INSERT INTO user_address(user_id, address_id, is_default, updated_at) VALUES ($1, $2, $3, current_timestamp)';
 
     await this.db.query(
       query,
-      [user.id, address.id, isDefault]
+      [user.id, address.id, isDefault !== undefined ? isDefault : false]
     );
   }
 
@@ -36,8 +36,8 @@ class UserAddressService {
         user_address.address_id
       ]
     );
-    const user_address = result.rows[0];
-    return user_address;
+    const userAddress = result.rows[0];
+    return userAddress;
   };
 
   deleteUserAddress = async (user_address) => {
