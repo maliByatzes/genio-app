@@ -26,6 +26,17 @@ class UserController {
       return res.status(500).json({ error: err.message });
     }
   };
+
+  updateUser = async (req, res) => {
+    try {
+      const current_user = res.locals.user;
+
+      const updatedUser = await this.userService.updateUserTransaction(current_user.id, req.body);
+      return res.status(200).send(updatedUser);
+    } catch (err) {
+      return res.status(500).json({ error: err.message });
+    }
+  };
 }
 
 export default UserController;
