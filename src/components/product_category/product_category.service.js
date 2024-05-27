@@ -5,8 +5,6 @@ class ProductCategoryService {
     this.db = db;
   }
 
-  // Add one product category
-
   addProductCategory = async (productCategory) => {
     const query = 'INSERT INTO product_category(parent_category_id, category_name, updated_at) VALUES ($1, $2, current_timestamp) RETURNING *';
 
@@ -21,12 +19,17 @@ class ProductCategoryService {
     return createdProductCategory;
   };
 
-  // Add many product categories
-
   addManyProductCategory = async (productCategories) => {
     const promises = productCategories.map(productCategory => this.addProductCategory(productCategory));
     const results = await Promise.all(promises);
     return results;
+  };
+
+  getProductCategoryByName = async (name) => {
+    const query = 'SELECT * FROM product_category WHERE category_name = $1 LIMIT 1';
+
+    const result = await this.db.query(query, [name]);
+    return result.rows[0];
   };
 
   // Delete one product category
@@ -38,7 +41,7 @@ class ProductCategoryService {
   readAllProductCategories = async () => {
     const query = 'SELECT * FROM product_category';
 
-    const result = this.db.query(query);
+    const result = await this.db.query(query);
     return result.rows;
   };
 }
