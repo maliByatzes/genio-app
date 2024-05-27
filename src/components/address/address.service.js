@@ -58,7 +58,9 @@ class AddressService {
     }
   };
 
+
   getAddresses = async (user) => {
+    // TODO: inculude country name instead of country_id
     const query = `
       SELECT
         a.id AS address_id,

@@ -41,7 +41,7 @@ class UserAddressService {
   };
 
   deleteUserAddress = async (user_address) => {
-    const query = 'DELET FROM user_address WHERE user_id = $1 AND address_id = $2';
+    const query = 'DELETE FROM user_address WHERE user_id = $1 AND address_id = $2';
 
     await this.db.query(query, [user_address.user_id, user_address.address_id]);
   };

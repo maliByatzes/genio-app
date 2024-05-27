@@ -35,7 +35,7 @@ class UserService {
   };
 
   getUserForUpdate = async (id) => {
-    const query = 'SELECT * FROM site_user WHERE id = $1 LIMIT 1';
+    const query = 'SELECT * FROM site_user WHERE id = $1 LIMIT 1 FOR UPDATE';
 
     const result = await this.db.query(query, [id]);
     const user = result.rows[0];
