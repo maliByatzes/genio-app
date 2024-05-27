@@ -42,6 +42,23 @@ class AuthMiddleware {
       return res.status(500).json({ error: err.message });
     }
   };
+
+  requireAdmin = async (req, res, next) => {
+    try {
+      const user = res.locals.user;
+
+      if (!user) {
+        return res.status(401).send({ error: 'Session has expred or user doesn\'t exist' });
+      }
+
+      if (user.user_type !== 'admin') {
+        return res.status(401).send({ error: 'Unauthorized' });
+      }
+      next();
+    } catch(err) {
+      return res.status(500).json({ error: err.message });
+    }
+  };
 }
 
 export default AuthMiddleware;
