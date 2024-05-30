@@ -3,7 +3,8 @@ import loadRoutes from './loaders/routes.js';
 
 const app = express();
 
-app.use(express.json());
+// temp solution for testing
+app.use(express.json({ limit: '10mb' }));
 loadRoutes(app);
 // app.use(errorMiddleware);
 
