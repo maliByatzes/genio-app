@@ -46,7 +46,12 @@ class ProductService {
     return result.rows;
   };
 
-  // Read one product, that is return all product_items under the product
+  deleteOneProduct = async (id) => {
+    const query = 'DELETE FROM product WHERE id = $1';
+
+    const result = await this.db.query(query, [id]);
+    return result.rows[0];
+  };
 }
 
 export default ProductService;
