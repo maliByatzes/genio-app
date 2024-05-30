@@ -37,17 +37,24 @@ class ProductCategoryService {
     return result.rows[0];
   };
 
-  // Delete one product category
+  deleteOneProductCategory = async (id) => {
+    const query = 'DELETE FROM product_category WHERE id = $1';
 
-  // Update one product category
-
-  // Read all product categories
+    await this.db.query(query, [id]);
+  };
 
   readAllProductCategories = async () => {
     const query = 'SELECT * FROM product_category';
 
     const result = await this.db.query(query);
     return result.rows;
+  };
+
+  getOneProductCategoryById = async (id) => {
+    const query = 'SELECT * FROM product_category WHERE id = $1 LIMIT 1';
+
+    const result = await this.db.query(query, [id]);
+    return result.rows[0];
   };
 }
 

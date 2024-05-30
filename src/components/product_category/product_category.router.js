@@ -28,6 +28,13 @@ class ProductCategoryRouter {
       .route('/')
       .get(this.productCategoryController.getAllProductCategories);
 
+    router
+      .use(this.authMiddleware.authorize)
+      .use(this.authMiddleware.requireUser)
+      .route('/:id')
+      .get(this.productCategoryController.getOneProductCategory)
+      .delete(this.productCategoryController.deleteOneProductCategory);
+
     return router;
   }
 }
