@@ -8,10 +8,15 @@ class ProductCategoryService {
   addProductCategory = async (productCategory) => {
     const query = 'INSERT INTO product_category(parent_category_id, category_name, updated_at) VALUES ($1, $2, current_timestamp) RETURNING *';
 
+    let pc;
+    if (productCategory.parentCategoryName) {
+      pc = await this.getProductCategoryByName(productCategory.parentCategoryName);
+    }
+
     const result = await this.db.query(
       query,
       [
-        productCategory.parentCategoryId !== undefined ? productCategory.parentCategoryId : 1,
+        productCategory.parentCategoryName !== undefined ? pc.id : 1,
         productCategory.categoryName
       ]
     );

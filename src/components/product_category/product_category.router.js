@@ -24,7 +24,7 @@ class ProductCategoryRouter {
 
     router
       .use(this.authMiddleware.authorize)
-      .use(this.authMiddleware.requireAdmin)
+      .use(this.authMiddleware.requireUser)
       .route('/')
       .get(this.productCategoryController.getAllProductCategories);
 
