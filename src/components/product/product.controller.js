@@ -7,22 +7,15 @@ class ProductController {
 
   addProduct = async (req, res) => {
     try {
-      let imageData;
-      let contentType;
-      const { productImage } = req.body;
-
-      if (productImage && typeof productImage === 'string' && productImage.startsWith('data:')) {
-        const parts = productImage.split(';base64,');
-        contentType = parts[0].split(':')[1];
-        imageData = Buffer.from(parts[1], 'base64');
-      }
-
-      const productImageURL = uploadProductImage(imageData, contentType);
+      const imageUrl = await uploadProductImage(req.file);
+      console.log(imageUrl);
 
       const newProduct = {
         ...req.body,
-        productImageURL,
+        productImageURL: imageUrl,
       };
+
+      console.log(newProduct);
 
       const product = await this.productService.addProductTransaction(newProduct);
       return res.status(201).send(product);

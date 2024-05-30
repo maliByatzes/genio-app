@@ -1,4 +1,5 @@
 import express from 'express';
+import upload from '../../utils/upload.js';
 
 class ProductRouter {
   constructor(productController, authMiddleware) {
@@ -12,6 +13,7 @@ class ProductRouter {
     router
       .use(this.authMiddleware.authorize)
       .use(this.authMiddleware.requireAdmin)
+      .use(upload.single('file'))
       .route('/create')
       .post(this.productController.addProduct);
 
