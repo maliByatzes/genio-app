@@ -52,6 +52,14 @@ class ProductService {
     const result = await this.db.query(query, [id]);
     return result.rows[0];
   };
+
+  getProductByName = async (name) => {
+    const query = 'SELECT * FROM product WHERE name = $1';
+
+    const result = await this.db.query(query, [name]);
+    const product = result.rows[0];
+    return product;
+  }
 }
 
 export default ProductService;
